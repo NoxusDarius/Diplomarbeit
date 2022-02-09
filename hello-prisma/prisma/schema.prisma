@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+//npx prisma migrate dev --name init 
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Mitarbeiter{
+  Mitarbeiter_ID Int  @default(autoincrement()) @id
+  Username String @unique
+  Vorname String
+  Nachname String 
+  password String
+  Firmenname String 
+  isAdmin Boolean
+  rechnung Rechnung[]
+}
+model Rechnung{
+  Rechnungs_ID Int  @default(autoincrement()) @id
+  Firmenname_Kauf String 
+  Datum_Kauf DateTime
+  Betrag Decimal
+  Steuersatz Int
+  mitarbeiter Mitarbeiter @relation(fields: [mitarbeiter_id],references: [Mitarbeiter_ID])
+  mitarbeiter_id Int
+  rechnungsbild Rechnungsbild[]
+}
+
+model Rechnungsbild{
+  Bild_ID Int @default(autoincrement()) @id
+  Bild_unbearbeitet Int 
+  Bild_bearbeitet Int 
+  rechnung Rechnung @relation(fields: [rechnungs_ID], references: [Rechnungs_ID])
+  rechnungs_ID Int 
+}

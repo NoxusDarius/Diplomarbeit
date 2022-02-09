@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `firma` MODIFY `UID_Nummer` VARCHAR(191) NOT NULL;
